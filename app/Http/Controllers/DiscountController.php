@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\data;
+use App\Models\Discount;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class DataController extends Controller
+class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,9 @@ class DataController extends Controller
      */
     public function index()
     {
-        $date=Data::all();
-        return response()->json($date);
+       $product=Product::all();
+       $product->Discount()->rate;
+       return response()->json($product);
     }
 
     /**
@@ -25,7 +27,7 @@ class DataController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -36,74 +38,66 @@ class DataController extends Controller
      */
     public function store(Request $request)
     {
-        $date=[
+
+        $discounts=[
             'user_id'=>auth()->user()->id,
-            'telegram'=>$request->telegram,
-            'instagram'=>$request->instagram,
-            'whatsapp'=>$request->whatsapp,
-            'mobile'=>$request->mobile,
-            'address'=>$request->address
+            'protect_id'=>$request->discounts,
+            'rate'=>$request->rate,
         ];
 
-        Data::create($date);
-        return response()->json($date);
+        return response()->json($discounts);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\data  $data
+     * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data=Data::query()->find($id);
-        return response()->json($data);
+        $discounts=Discount::query()->find($id);
+        return response()->json($discounts);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\data  $data
+     * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function edit(data $data,$id)
+    public function edit($id)
     {
-        $data->find($id);
-        return response()->json($data);
+        $discounts=Discount::query()->find($id);
+        return response()->json($discounts);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\data  $data
+     * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
-        $data=Data::query()->where('id',$id)->update([
-            'telegram'=>$request->telegram,
-            'instagram'=>$request->instagram,
-            'whatsapp'=>$request->whatsapp,
-            'mobile'=>$request->mobile,
-            'address'=>$request->address,
-        ]);
-
-        return response()->json($data);
-
+        $discounts=Discount::query()->find($id)
+            ->update([
+                'product_id'=>$request->protect_id,
+                'rate'=>$request->rate,
+            ]);
+        return response()->json($discounts);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\data  $data
+     * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(data $data,$id)
+    public function destroy($id)
     {
-        $data->where('id',$id);
-        $data->delete();
-        return response()->json($data);
+        $discounts=Discount::query()->find($id)->delete();
+        return response()->json($discounts);
     }
 }

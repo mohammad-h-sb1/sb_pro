@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\like;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -33,9 +34,11 @@ class LikeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Product $product)
     {
-        //
+        $product->likes()->toggle(
+            auth()->user()->id
+        );
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLikesTable extends Migration
+class AddOffersToCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateLikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('likes', function (Blueprint $table) {
-            $table->primary(['user_id','product_id']);
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+        Schema::table('comments', function (Blueprint $table) {
+            $table->text('offers')->after('content');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateLikesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('likes');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropColumn('offers');
+        });
     }
 }

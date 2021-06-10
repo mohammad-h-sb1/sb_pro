@@ -16,7 +16,7 @@ class CreateReatesTable extends Migration
         Schema::create('reates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('users_id');
-            $table->unsignedBigInteger('protect_id');
+            $table->unsignedBigInteger('product_id');
             $table->boolean('rank');
             $table->timestamps();
         });

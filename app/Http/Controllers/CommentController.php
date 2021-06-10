@@ -14,7 +14,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $commets=Comment::all();
+        return response()->json($commets);
     }
 
     /**
@@ -35,7 +36,16 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comment=[
+            'user_id'=>auth()->user()->id,
+            'content'=>$request->countent,
+            'strengths'=>$request->	trengths,
+            'weak_points'=>$request->weak_points,
+
+        ];
+
+        Comment::created($comment);
+        return response()->json($comment);
     }
 
     /**
@@ -44,9 +54,10 @@ class CommentController extends Controller
      * @param  \App\Models\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(comment $comment)
+    public function show($id)
     {
-        //
+          $comment=Comment::query()->find($id);
+          return response()->json($comment);
     }
 
     /**
@@ -55,9 +66,10 @@ class CommentController extends Controller
      * @param  \App\Models\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(comment $comment)
+    public function edit($id)
     {
-        //
+        $comment=Comment::query()->find($id);
+        return response()->json($comment);
     }
 
     /**
@@ -78,8 +90,64 @@ class CommentController extends Controller
      * @param  \App\Models\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(comment $comment)
+    public function destroy(comment $comment,$id)
     {
-        //
+        $comment->where($id);
+        $comment->delete();
+        return response()->json($comment);
     }
+
+    public function commentOffersIndex()
+    {
+        $commentOffers=Comment::all();
+        return response()->json($commentOffers);
+    }
+
+    public function commentOffersCreate()
+    {
+
+    }
+
+    public function commentOffersStore(Request $request)
+    {
+        $comment=[
+            'offers'=>$request->offers,
+        ];
+        Comment::create($comment);
+        return response()->json($comment);
+    }
+
+
+    public function commentOffersShow($id)
+    {
+        $commentOffers=Comment::query()->find($id);
+        return response()->json($commentOffers);
+
+    }
+    public function commentOffersEdit($id)
+    {
+        $commentOffers=Comment::query()->find($id);
+        return response()->json($commentOffers);
+    }
+    public function commentOffersUpdate(Request $request,$id)
+    {
+        $commentOffers=Comment::query()->find($id)
+        ->update([
+            'offers'=>$request->offers,
+        ]);
+
+        return response()->json($commentOffers);
+
+    }
+    public function commentOffersDelete(Request $request,$id)
+    {
+        $commentOffers=Comment::query()->find($id)
+            ->delete();
+        return response()->json($commentOffers);
+
+    }
+
+
+
+
 }

@@ -21,6 +21,6 @@ class Menu extends Model
 
     public function footer()
     {
-        return $this->tupe=self::PARTE_FOOTER;
+        return $this->type=self::PARTE_FOOTER;
     }
 }

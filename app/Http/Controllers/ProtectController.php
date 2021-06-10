@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Protect;
+use App\Http\Requests\protect\ProtectUpdate;
+use App\Http\Requests\protect\ProtectStore;
+use App\Models\Product;
+use App\Models\Product_img;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ProtectController extends Controller
@@ -14,9 +18,11 @@ class ProtectController extends Controller
      */
     public function index()
     {
-       $protect=Protect::all();
+        $tag=Tag::query()->first();
+       $product=Product::query()->first();
+       $product->tags()->attach($tag);
 
-       return response()->json($protect);
+       return response()->json($product);
     }
 
     /**
@@ -26,6 +32,8 @@ class ProtectController extends Controller
      */
     public function create()
     {
+        $product=Product::all();
+        return response()->json($product);
 
     }
 
@@ -35,64 +43,80 @@ class ProtectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProtectStore $request, Product $product)
     {
-        $file=$request->file('photo');
-        $file_name=$file->storeAs();
-
+//        $file=$protect_img->file('photo');
+//        $file_name=$file->getClientOriginalName();
+//        $file->storeAs('imag/protect/',$file_name,'public_img');
         $post=[
             'user_id'=>auth()->user()->id,
             'category-id'=>$request->category_id,
             'name'=>$request->name,
-//            'content'=>$request->content,
-            'mony'=>$request->moby
+            'content'=>$request->content,
+            'money'=>$request->money,
+            'banner'=>$product->protect_imges()->img,
         ];
-        $post=response()->json($post);
+        Product::create($post);
+        return response()->json($post);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Protect  $protect
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Protect $protect)
+    public function show($id)
     {
-        //
+        $product=Product::query()->find($id);
+        return response()->json($product);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Protect  $protect
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Protect $protect)
+    public function edit(Product $product, $id)
     {
-        //
+        $product->find($id);
+         return response()->json($product);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Protect  $protect
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Protect $protect)
+    public function update(ProtectUpdate $request,$id)
     {
-        //
+        $product=Product::query()->where('id',$id)
+            ->update([
+                'name'=>$request->name,
+                'category_id'=>$request->input('category_id'),
+                'user_id'=>auth()->user()->id,
+                'content'=>$request->body,
+                'money'=>$request->money,
+            ]);
+
+        return response()->json($product);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Protect  $protect
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Protect $protect)
+    public function destroy(Product $product, $id)
     {
-        //
+        $product->where('id',$id);
+        $product->delete();
+        return  response()->json($product);
     }
 }

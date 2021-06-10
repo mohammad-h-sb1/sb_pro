@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProtectsTable extends Migration
+class CreateSoldProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateProtectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('protects', function (Blueprint $table) {
+        Schema::create('sold_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('name');
-            $table->text('content');
-            $table->string('banner');
-            $table->integer('money');
+            $table->unsignedBigInteger('product_id');
+            $table->integer('Number_sold');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateProtectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('protects');
+        Schema::dropIfExists('sold_products');
     }
 }

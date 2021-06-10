@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tag;
+use App\Models\Product;
+use App\Models\Product_img;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class ProtectImgController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tag=Tag::all();
-        return response()->json('tag');
+        //
     }
 
     /**
@@ -34,65 +34,62 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $tag=[
-            'user_id'=>auth()->user()->id,
-            'name'=>$request->name,
+        $file=$request->file('photo');
+        $file_Name=$file->getClientOriginalName();
+        $file->storeAs('images/photo',$file_Name,'public_photos');
+        $product=Product::query()->find($id);
+        $post_img=[
+            'protect_id'=>$product->id,
+            'img'=>$file,
         ];
-        Tag::create($tag);
-        return response()->json($tag);
+
+        return response()->json($post_img);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\Product_img  $product_img
      * @return \Illuminate\Http\Response
      */
-    public function show(tag $tag)
+    public function show(Product_img $product_img)
     {
-        return response()->json($tag);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\Product_img  $product_img
      * @return \Illuminate\Http\Response
      */
-    public function edit(tag $tag,$id)
+    public function edit(Product_img $product_img)
     {
-        $tag->find($id);
-        return response($tag);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\Product_img  $product_img
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tag $tag,$id)
+    public function update(Request $request, Product_img $product_img)
     {
-        $tag=Tag::query()->where('id',$id)
-            ->update([
-                'name'=>$request->name
-            ]);
-        return response()->json($tag);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\Product_img  $product_img
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product_img $product_img)
     {
-        $tag=Tag::query()->where('id',$id)
-            ->delete();
-        return  response()->json($tag);
+        //
     }
 }

@@ -25,6 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'mobile',
+        'profile'
     ];
 
     /**
@@ -64,8 +66,22 @@ class User extends Authenticatable
         return $this->hasMany(Category::class);
     }
 
-    public function Protects()
+    public function product()
     {
-        return $this->hasMany(Protect::class);
+        return $this->hasMany(Product::class);
+    }
+
+    public function likes()
+    {
+        return $this->belongsTo(Product::class,'likes');
+    }
+
+    public function data()
+    {
+        return $this->hasOne(Data::class);
+    }
+    public function getJalaly()
+    {
+        return verta($this->created_at)->format('Y/m/d');
     }
 }

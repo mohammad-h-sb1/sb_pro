@@ -13,11 +13,15 @@ class Category extends Model
 
     public function protects()
     {
-        return $this->hasMany(Protect::class);
+        return $this->hasMany(Product::class);
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function getJalaly()
+    {
+        return verta($this->created_at)->format('Y/m/d');
     }
 }

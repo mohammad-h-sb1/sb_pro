@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tag;
+use App\Models\SoldProduct;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class SoldProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tag=Tag::all();
-        return response()->json('tag');
+        //
     }
 
     /**
@@ -36,63 +35,51 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $tag=[
-            'user_id'=>auth()->user()->id,
-            'name'=>$request->name,
-        ];
-        Tag::create($tag);
-        return response()->json($tag);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function show(tag $tag)
+    public function show(SoldProduct $soldProduct)
     {
-        return response()->json($tag);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit(tag $tag,$id)
+    public function edit(SoldProduct $soldProduct)
     {
-        $tag->find($id);
-        return response($tag);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tag $tag,$id)
+    public function update(Request $request, SoldProduct $soldProduct)
     {
-        $tag=Tag::query()->where('id',$id)
-            ->update([
-                'name'=>$request->name
-            ]);
-        return response()->json($tag);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tag  $tag
+     * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SoldProduct $soldProduct)
     {
-        $tag=Tag::query()->where('id',$id)
-            ->delete();
-        return  response()->json($tag);
+        //
     }
 }
