@@ -10,9 +10,10 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     const TYPE_ADMIN='admin';
+    const TYPE_ADMIN_NORMAL='admin_normal';
     const TYPE_MANAGER='manager';
     const TYPE_USER='user';
-    const TYPES=[self::TYPE_ADMIN,self::TYPE_MANAGER,self::TYPE_USER];
+    const TYPES=[self::TYPE_ADMIN,self::TYPE_MANAGER,self::TYPE_USER,self::TYPE_ADMIN_NORMAL];
 
     use HasFactory, Notifiable;
 
@@ -83,5 +84,20 @@ class User extends Authenticatable
     public function getJalaly()
     {
         return verta($this->created_at)->format('Y/m/d');
+    }
+
+    public function customerRating()
+    {
+        return $this->hasOne(Customer_Rating::class);
+    }
+
+    public function rateProducts()
+    {
+       return $this->hasMany(RateProduct::class);
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
     }
 }

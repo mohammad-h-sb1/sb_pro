@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\protect;
+namespace App\Http\Requests\product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProtectUpdate extends FormRequest
+class ProductUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

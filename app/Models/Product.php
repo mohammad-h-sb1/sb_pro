@@ -59,4 +59,19 @@ class Product extends Model
     {
         return $this->hasOne(Discount::class);
     }
+
+    public function SoldProduct()
+    {
+        return $this->belongsTo(SoldProduct::class);
+    }
+
+    public function depot()
+    {
+        $this->hasOne(Product::class);
+    }
+
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }

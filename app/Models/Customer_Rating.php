@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SoldProduct extends Model
+class Customer_Rating extends Model
 {
     use HasFactory;
 
-    public function product()
+    public function user()
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(User::class);
     }
 }

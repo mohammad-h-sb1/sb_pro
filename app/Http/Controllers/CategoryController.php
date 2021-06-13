@@ -46,7 +46,6 @@ class CategoryController extends Controller
             'name'=>$request->name,
             'img'=>$file,
             'content'=>$request->content,
-
         ];
         Category::create($category);
         return response()->json();
@@ -58,9 +57,10 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show($id)
     {
-        //
+        $category=Category::query()->find($id);
+        return response()->json($category);
     }
 
     /**
@@ -69,9 +69,9 @@ class CategoryController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category,$id)
+    public function edit(category $category)
     {
-        $category->finde($id);
+//        $category->finde($id);
         return response()->json($category);
     }
 

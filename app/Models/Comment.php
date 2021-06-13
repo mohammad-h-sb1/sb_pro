@@ -27,4 +27,9 @@ class Comment extends Model
     {
         return verta($this->created_at)->format('Y/m/d');
     }
+
+    public function status()
+    {
+        return !! $this->status ? 'فعال':'غیرفعال';
+    }
 }

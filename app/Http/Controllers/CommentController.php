@@ -149,5 +149,13 @@ class CommentController extends Controller
 
 
 
-
+    public function status($id,Request $request)
+    {
+        $status=Comment::query()->find($id);
+        $status->update([
+                'status'=> !$status->status ,
+            ]
+        );
+        return response()->json($status);
+    }
 }

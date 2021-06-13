@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\protect;
+namespace App\Http\Requests\product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProtectStore extends FormRequest
+class ProductStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class ProtectStore extends FormRequest
     public function rules()
     {
         return [
+            'category_id'=>['require','string','max:255'],
             'name'=>['require','string','max:255'],
-            'category_id'=>['require','string'],
             'content'=>['string'],
             'banner'=>['require','img'],
 

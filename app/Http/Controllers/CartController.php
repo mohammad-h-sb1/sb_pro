@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Product_img;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
-class ProtectImgController extends Controller
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,62 +33,66 @@ class ProtectImgController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
-        $file=$request->file('photo');
-        $file_Name=$file->getClientOriginalName();
-        $file->storeAs('images/photo',$file_Name,'public_photos');
-        $product=Product::query()->find($id);
-        $post_img=[
-            'protect_id'=>$product->id,
-            'img'=>$file,
+        $cart=[
+            'user_id'=>auth()->user()->id,
+            'product_id'=>$request->product_id,
+            'product_name'=>$request->name,
+            'product_number'=>$request->product_number
         ];
-
-        return response()->json($post_img);
+        Cart::create($cart);
+        return response()->json($cart);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product_img  $product_img
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(Product_img $product_img)
+    public function show($id)
     {
-        //
+        $user=auth()->user()->id;
+        return response()->json($user);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product_img  $product_img
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product_img $product_img)
+    public function edit($id)
     {
-        //
+       $cart=Cart::query()->find($id);
+       return response()->json($cart);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product_img  $product_img
+     * @param  \App\Models\Cart  $cart4
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product_img $product_img)
+    public function update(Request $request,$id)
     {
-        //
+        $cart=Cart::query()->where('id',$id)
+        ->update();
+        return response()->json($cart);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product_img  $product_img
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product_img $product_img)
+    public function destroy($id)
     {
-        //
+        $cart=Cart::query()->where('product_id',$id)
+            ->delete();
+        return response()->json($cart);
     }
 }

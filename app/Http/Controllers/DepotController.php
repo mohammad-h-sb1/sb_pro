@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\menu;
+use App\Models\Depot;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class DepotController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menu=Menu::all();
-        return response()->json($menu);
+        $depot=Depot::all();
+        return response()->json($depot);
     }
 
     /**
@@ -36,64 +37,65 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu=[
-            'header'=>$request->header,
-            'footer'=>$request->footer,
+        $depot=[
+            'product'=>$request->product,
+            'number'=>$request->number
         ];
-        return response()->json($menu);
+        return response()->json($depot);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Depot  $depot
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Depot $depot,$id)
     {
-        $menu=Menu::query()->find($id);
-        return response()->json($menu);
+        $protect=Product::query()->find($id);
+        return response()->json($protect);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Depot  $depot
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Depot $depot,$id)
     {
-        $menu=Menu::query()->find($id);
-        return response()->json($menu);
+        $protect=Product::query()->find($id);
+        return response()->json($protect);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Depot  $depot
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        $menu=Menu::query()->where('id',$id)
-            ->update([
-                'heather'=>$request->header,
-                'footer'=>$request->footer,
-            ]);
-        return response()->json($menu);
+        $depot=Depot::query()->where('product_id',$id)
+            ->update(
+                [
+                    'number'=>$request->number
+                ]
+            );
+        return response()->json($depot);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Depot  $depot
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $menu=Menu::query()->where('id',$id)
+        $depot=Depot::query()->where('product_id',$id)
             ->delete();
-        return response()->json($menu);
+        return response()->json($depot);
     }
 }

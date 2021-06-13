@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDiscountsTable extends Migration
+class CreateCustomerRatingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateDiscountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('discounts', function (Blueprint $table) {
+        Schema::create('customer__ratings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
-            $table->integer('rate');
+            $table->integer('rating');
             $table->timestamps();
         });
+
+        //این مایگرشن برای امتیاز  هر یوزر در سایت
+
+
     }
-    //این مایگریشن برای تخفیف هاست فقط
 
     /**
      * Reverse the migrations.
@@ -30,6 +32,6 @@ class CreateDiscountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discounts');
+        Schema::dropIfExists('customer__ratings');
     }
 }

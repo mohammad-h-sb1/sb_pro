@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\menu;
+use App\Models\Customer_Rating;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class CustomerRatingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menu=Menu::all();
-        return response()->json($menu);
+        $customerRating=Customer_Rating::all();
+        return response()->json($customerRating);
     }
 
     /**
@@ -36,64 +36,65 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu=[
-            'header'=>$request->header,
-            'footer'=>$request->footer,
+        $customer_Rating=[
+          'user_id'=>$request->user_id,
+          'ratings'=>$request->ratings,
         ];
-        return response()->json($menu);
+        Customer_Rating::create($customer_Rating);
+
+        return response()->json($customer_Rating);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Customer_Rating  $customer_Rating
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $menu=Menu::query()->find($id);
-        return response()->json($menu);
+        $customer_Rating=Customer_Rating::query()->find($id);
+        return response()->json($customer_Rating);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Customer_Rating  $customer_Rating
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $menu=Menu::query()->find($id);
-        return response()->json($menu);
+        $customer_Rating=Customer_Rating::query()->find($id);
+        return response()->json($customer_Rating);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Customer_Rating  $customer_Rating
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $menu=Menu::query()->where('id',$id)
+        $customer_Rating=Customer_Rating::query()->where('id',$id)
             ->update([
-                'heather'=>$request->header,
-                'footer'=>$request->footer,
+                'ratings'=>$request->ratings
             ]);
-        return response()->json($menu);
+        return response()->json($customer_Rating);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\menu  $menu
+     * @param  \App\Models\Customer_Rating  $customer_Rating
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Customer_Rating $customer_Rating,$id)
     {
-        $menu=Menu::query()->where('id',$id)
-            ->delete();
-        return response()->json($menu);
+        $customer_Rating->where('id',$id);
+        $customer_Rating->delete();
+        return response()->json($customer_Rating);
     }
 }

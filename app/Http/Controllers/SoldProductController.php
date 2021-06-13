@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\SoldProduct;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class SoldProductController extends Controller
      */
     public function index()
     {
-        //
+        $SoldProducts=SoldProduct::all();
+        return response()->json($SoldProducts);
     }
 
     /**
@@ -35,7 +37,11 @@ class SoldProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $SoldProduct=[
+            'product_id'=>$request->product_id,
+            'Number_sold'=>$request->Number_sold,
+        ];
+        return response()->json($SoldProduct);
     }
 
     /**
@@ -44,9 +50,10 @@ class SoldProductController extends Controller
      * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function show(SoldProduct $soldProduct)
+    public function show($id)
     {
-        //
+        $SoldProduct=SoldProduct::query()->find($id);
+        return response()->json($SoldProduct);
     }
 
     /**
@@ -55,9 +62,10 @@ class SoldProductController extends Controller
      * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit(SoldProduct $soldProduct)
+    public function edit($id)
     {
-        //
+        $SoldProduct=SoldProduct::query()->find($id);
+        return response()->json($SoldProduct);
     }
 
     /**
@@ -67,9 +75,14 @@ class SoldProductController extends Controller
      * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SoldProduct $soldProduct)
+    public function update(Request $request, $id)
     {
-        //
+        $SoldProduct=SoldProduct::query()->find($id)
+        ->update([
+            'product_id'=>$request->product_id,
+            'Number_sold'=>$request->Number_sold,
+        ]);
+        return response()->json($SoldProduct);
     }
 
     /**
@@ -78,8 +91,10 @@ class SoldProductController extends Controller
      * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SoldProduct $soldProduct)
+    public function destroy($id)
     {
-        //
+        $soldProduct=SoldProduct::query()->find($id)
+            ->delete();
+        return response()->json($soldProduct);
     }
 }
