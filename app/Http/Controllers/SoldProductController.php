@@ -52,7 +52,7 @@ class SoldProductController extends Controller
      */
     public function show($id)
     {
-        $SoldProduct=SoldProduct::query()->find($id);
+        $SoldProduct=SoldProduct::query()->findOrFail($id);
         return response()->json($SoldProduct);
     }
 
@@ -62,9 +62,9 @@ class SoldProductController extends Controller
      * @param  \App\Models\SoldProduct  $soldProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SoldProduct $soldProduct,$id)
     {
-        $SoldProduct=SoldProduct::query()->find($id);
+        $SoldProduct=SoldProduct::query()->findOrFail($id);
         return response()->json($SoldProduct);
     }
 

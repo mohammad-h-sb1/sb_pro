@@ -53,7 +53,7 @@ class CustomerRatingController extends Controller
      */
     public function show($id)
     {
-        $customer_Rating=Customer_Rating::query()->find($id);
+        $customer_Rating=Customer_Rating::query()->findOrFail($id);
         return response()->json($customer_Rating);
     }
 
@@ -65,7 +65,7 @@ class CustomerRatingController extends Controller
      */
     public function edit($id)
     {
-        $customer_Rating=Customer_Rating::query()->find($id);
+        $customer_Rating=Customer_Rating::query()->findOrFail($id);
         return response()->json($customer_Rating);
     }
 

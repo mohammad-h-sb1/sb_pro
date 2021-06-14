@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    const GENDER_MAN='man';
+    const GENDER_WOMAN='woman';
+    const GENDER = [self::GENDER_MAN,self::GENDER_WOMAN];
+
     use HasFactory;
 
     protected $guarded=[];
@@ -73,5 +77,10 @@ class Product extends Model
     public function cart()
     {
         return $this->belongsTo(Cart::class);
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
     }
 }

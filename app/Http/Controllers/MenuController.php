@@ -36,11 +36,16 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu=[
-            'header'=>$request->header,
-            'footer'=>$request->footer,
-        ];
-        return response()->json($menu);
+        if (auth()->user()->role === 'admin') {
+            $menu = [
+                'header' => $request->header,
+                'footer' => $request->footer,
+            ];
+            return response()->json($menu);
+        }
+        else{
+           return abort(404,'شما دسترسی ندارید');
+        }
     }
 
     /**
@@ -92,8 +97,13 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $menu=Menu::query()->where('id',$id)
-            ->delete();
-        return response()->json($menu);
+        if (auth()->user()->role === 'admin') {
+            $menu = Menu::query()->where('id', $id)
+                ->delete();
+            return response()->json($menu);
+        }
+        else{
+            return  abort(404,'شما دسترسیندارید');
+        }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
+class ShopController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -35,64 +35,51 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $cart=[
-            'user_id'=>auth()->user()->id,
-            'product_id'=>$request->product_id,
-            'product_name'=>$request->name,
-            'product_number'=>$request->product_number
-        ];
-        Cart::create($cart);
-        return response()->json($cart);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param  \App\Models\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shop $shop)
     {
-        $user=auth()->user()->id;
-        return response()->json($user);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param  \App\Models\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Shop $shop)
     {
-       $cart=Cart::query()->findOrFail($id);
-       return response()->json($cart);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cart  $cart4
+     * @param  \App\Models\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, Shop $shop)
     {
-        $cart=Cart::query()->where('id',$id)
-        ->update();
-        return response()->json($cart);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cart  $cart
+     * @param  \App\Models\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Shop $shop)
     {
-        $cart=Cart::query()->where('product_id',$id)
-            ->delete();
-        return response()->json($cart);
+        //
     }
 }

@@ -56,7 +56,7 @@ class RateProductController extends Controller
      */
     public function show($id)
     {
-        $rateProducts=RateProduct::query()->find($id);
+        $rateProducts=RateProduct::query()->findOrFail($id);
         return response()->json($rateProducts);
     }
 
@@ -68,7 +68,7 @@ class RateProductController extends Controller
      */
     public function edit($id)
     {
-        $rateProducts=RateProduct::query()->find($id);
+        $rateProducts=RateProduct::query()->findOrFail($id);
         return response()->json($rateProducts);
     }
 

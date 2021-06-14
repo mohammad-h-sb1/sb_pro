@@ -52,7 +52,7 @@ class DepotController extends Controller
      */
     public function show(Depot $depot,$id)
     {
-        $protect=Product::query()->find($id);
+        $protect=Product::query()->findOrFail($id);
         return response()->json($protect);
     }
 
@@ -64,7 +64,7 @@ class DepotController extends Controller
      */
     public function edit(Depot $depot,$id)
     {
-        $protect=Product::query()->find($id);
+        $protect=Product::query()->findOrFail($id);
         return response()->json($protect);
     }
 

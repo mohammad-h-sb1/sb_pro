@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Comment;
 use App\Http\Middleware\Role;
+use App\Http\Middleware\StoreManager;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,6 +66,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'roles'=>Role::class,
-        'comment'=>Comment::class
+        'comment'=>Comment::class,
+        'store_manager'=>StoreManager::class,
     ];
 }

@@ -10,10 +10,11 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     const TYPE_ADMIN='admin';
+    const TYPE_STORE_MANAGER='store_manager';
     const TYPE_ADMIN_NORMAL='admin_normal';
-    const TYPE_MANAGER='manager';
+    const TYPE_INFLUENCER='influencer';
     const TYPE_USER='user';
-    const TYPES=[self::TYPE_ADMIN,self::TYPE_MANAGER,self::TYPE_USER,self::TYPE_ADMIN_NORMAL];
+    const TYPES=[self::TYPE_ADMIN,self::TYPE_USER,self::TYPE_ADMIN_NORMAL,self::TYPE_STORE_MANAGER,self::TYPE_INFLUENCER ];
 
     use HasFactory, Notifiable;
 
@@ -99,5 +100,24 @@ class User extends Authenticatable
     public function cart()
     {
         return $this->hasOne(Cart::class);
+    }
+
+    public function customerClub()
+    {
+        return $this->belongsTo(CustomerClub::class);
+    }
+
+    public function bank_accounts()
+    {
+        return $this->hasMany(BankAccount::class);
+    }
+
+    public function centralshops()
+    {
+        return $this->hasMany(CentralShop::class);
+    }
+    public function shops()
+    {
+        return $this->hasMany(Shop::class);
     }
 }

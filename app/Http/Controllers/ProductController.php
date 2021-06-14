@@ -32,12 +32,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $product = Product::all();
-        return response()->json($product);
-
-    }
+//    public function create()
+//    {
+//        $product = Product::all();
+//        return response()->json($product);
+//
+//    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,23 +45,23 @@ class ProductController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductStore $request, Product $product)
-    {
-//        $file=$protect_img->file('photo');
-//        $file_name=$file->getClientOriginalName();
-//        $file->storeAs('imag/protect/',$file_name,'public_img');
-        $post = [
-            'user_id' => auth()->user()->id,
-            'category-id' => $request->category_id,
-            'name' => $request->name,
-            'content' => $request->content,
-            'money' => $request->money,
-            'banner' => $product->protect_imges()->img,
-        ];
-        Product::create($post);
-        return response()->json($post,204);
-
-    }
+//    public function store(ProductStore $request, Product $product)
+//    {
+////        $file=$protect_img->file('photo');
+////        $file_name=$file->getClientOriginalName();
+////        $file->storeAs('imag/protect/',$file_name,'public_img');
+//        $post = [
+//            'user_id' => auth()->user()->id,
+//            'category-id' => $request->category_id,
+//            'name' => $request->name,
+//            'content' => $request->content,
+//            'money' => $request->money,
+//            'banner' => $product->protect_imges()->img,
+//        ];
+//        Product::create($post);
+//        return response()->json($post,204);
+//
+//    }
 
     /**
      * Display the specified resource.
@@ -81,46 +81,46 @@ class ProductController extends Controller
      * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
-    {
-//        $product->find($id);
-        return response()->json($product);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ProductUpdate $request, Product $product,$id)
-    {
-        $product = Product::query()->where('id', $id)
-            ->update([
-                'name' => $request->name,
-                'category_id' => $request->input('category_id'),
-                'user_id' => auth()->user()->id,
-                'content' => $request->body,
-                'money' => $request->money,
-            ]);
-
-        return response()->json($product);
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy( $id)
-    {
-        $product=Product::query()->where('id', $id);
-        $product->delete();
-        return response()->json($product);
-    }
+//    public function edit(Product $product)
+//    {
+////        $product->find($id);
+//        return response()->json($product);
+//    }
+//
+//    /**
+//     * Update the specified resource in storage.
+//     *
+//     * @param \Illuminate\Http\Request $request
+//     * @param \App\Models\Product $product
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function update(ProductUpdate $request, Product $product,$id)
+//    {
+//        $product = Product::query()->where('id', $id)
+//            ->update([
+//                'name' => $request->name,
+//                'category_id' => $request->input('category_id'),
+//                'user_id' => auth()->user()->id,
+//                'content' => $request->body,
+//                'money' => $request->money,
+//            ]);
+//
+//        return response()->json($product);
+//
+//    }
+//
+//    /**
+//     * Remove the specified resource from storage.
+//     *
+//     * @param \App\Models\Product $product
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function destroy( $id)
+//    {
+//        $product=Product::query()->where('id', $id);
+//        $product->delete();
+//        return response()->json($product);
+//    }
 
 
 

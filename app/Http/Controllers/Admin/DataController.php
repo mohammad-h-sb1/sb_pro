@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\data;
 use Illuminate\Http\Request;
 
@@ -57,7 +58,7 @@ class DataController extends Controller
      */
     public function show($id)
     {
-        $data=Data::query()->find($id);
+        $data=Data::query()->findOrFail($id);
         return response()->json($data);
     }
 

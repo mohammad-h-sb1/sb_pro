@@ -67,7 +67,7 @@ class ProductImgController extends Controller
      */
     public function edit($id)
     {
-        $product=Product::query()->find($id);
+        $product=Product::query()->findOrFail($id);
         return response()->json($product);
     }
 

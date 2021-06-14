@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Discount;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -56,7 +57,7 @@ class DiscountController extends Controller
      */
     public function show($id)
     {
-        $discounts=Discount::query()->find($id);
+        $discounts=Discount::query()->findOrFail($id);
         return response()->json($discounts);
     }
 
@@ -68,7 +69,7 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
-        $discounts=Discount::query()->find($id);
+        $discounts=Discount::query()->findOrFail($id);
         return response()->json($discounts);
     }
 
@@ -81,7 +82,7 @@ class DiscountController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $discounts=Discount::query()->find($id)
+        $discounts=Discount::query()->findOrFail($id)
             ->update([
                 'product_id'=>$request->protect_id,
                 'rate'=>$request->rate,
