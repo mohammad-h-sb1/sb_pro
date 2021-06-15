@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -24,6 +25,7 @@ class ProductController extends Controller
 
     public function store(Request $request,Product $product)
     {
+        $tag_id=Tag::query()->whereIn('name',$request->name)->get()->pluck('id')->toArray();
         $product=[
             'user_id'=>auth()->user()->id,
             'category_id'=>$request->category_id,
@@ -35,7 +37,12 @@ class ProductController extends Controller
             'money'=>$request->money
         ];
         Product::create($product);
+        $product->tags()->sync($tag_id);
         return response()->json($product,204);
+//        $product->tags->sync([$tag]);
+//        foreach ($product->tags as $tag){
+//            $product->tag->attach($tag->protect);
+//        }
     }
 
     public function edit($id)

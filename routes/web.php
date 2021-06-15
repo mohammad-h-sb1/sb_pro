@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryConteroller as AdminCategoryController;
 use App\Http\Controllers\Admin\CentralShopController as AdminCentralShopController;
 use App\Http\Controllers\Admin\DataController;
 use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\InfluencerController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController ;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\CartController;
@@ -141,6 +142,8 @@ Route::name('admin.')->group(function (){
               Route::middleware('roles')->prefix('status')->get('/status/{id}',[AdminShopController::class,'status']);
 
           });
+          Route::middleware('role')->resource('/influencer',InfluencerController::class);
+
     });
 });
 

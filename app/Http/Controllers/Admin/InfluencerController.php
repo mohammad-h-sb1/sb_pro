@@ -37,9 +37,16 @@ class InfluencerController extends Controller
      */
     public function store(Request $request)
     {
+        $code=auth()->user()->name.'abcdefgijklmnopqrstuyz12345678';
+        $code_rand=substr(str_shuffle($code),0,8);
         $influencer=[
-            'code'=>bcrypt('123mohammad');;
+            'user_id'=>auth()->user()->id,
+            'name'=>$request->name,
+            'code'=>$code_rand,
+            'discount_rate'=>$request->discount_rate,
         ];
+        Influencer::create($influencer);
+        return response()->json($influencer);
     }
 
     /**
@@ -48,9 +55,10 @@ class InfluencerController extends Controller
      * @param  \App\Models\Influencer  $influencer
      * @return \Illuminate\Http\Response
      */
-    public function show(Influencer $influencer)
+    public function show($id)
     {
-        //
+        $influencer=Influencer::query()->findOrFail($id);
+        return response()->json($influencer);
     }
 
     /**
@@ -59,9 +67,10 @@ class InfluencerController extends Controller
      * @param  \App\Models\Influencer  $influencer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Influencer $influencer)
+    public function edit($id)
     {
-        //
+        $influencer=Influencer::query()->findOrFail($id);
+        return response()->json($influencer);
     }
 
     /**
@@ -71,9 +80,19 @@ class InfluencerController extends Controller
      * @param  \App\Models\Influencer  $influencer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Influencer $influencer)
+    public function update(Request $request, $id)
     {
-        //
+        $code=auth()->user()->name.'abcdefgijklmnopqrstuyz12345678';
+        $code_rand=substr(str_shuffle($code),0,8);
+        $influencer=Influencer::query()->where('id',$id)->
+            update([
+                'user_id'=>auth()->user()->id,
+                'name'=>$request->name,
+                'code'=>$code_rand,
+                'discount_rate'=>$request->discount_rate,
+        ]);
+        return response()->json($influencer);
+
     }
 
     /**
@@ -84,6 +103,7 @@ class InfluencerController extends Controller
      */
     public function destroy(Influencer $influencer)
     {
-        //
+        $influencer->delete();
+        return response()->json($influencer);
     }
 }
