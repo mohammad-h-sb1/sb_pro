@@ -7,18 +7,21 @@ use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\InfluencerController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController ;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
+use App\Http\Controllers\Admin\StylistController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CentralShopController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerRatingController;
-use App\Http\Controllers\DepotController;
+use App\Http\Controllers\Admin\DepotController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImgController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RateProductController;
 use App\Http\Controllers\ReateController;
-use App\Http\Controllers\SearchController;
+//use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SoldProductController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -33,14 +36,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
 
 Route::name('front.')->group(function (){
     Route::prefix('product')->name('product.')->group(function (){
@@ -51,7 +53,7 @@ Route::name('front.')->group(function (){
         Route::resource('productImag',ProductImgController::class);
     });
     Route::prefix('category')->name('category.')->group(function (){
-        Route::resource('/category',CategoryController::class)->except(['create','store','delete','update','edit']);
+        Route::resource('/category',CategoryController::class)->except(['create','store','updte']);
     });
     Route::prefix('comment')->name('comment.')->group(function (){
         Route::resource('/comment',CommentController::class);
@@ -87,11 +89,19 @@ Route::name('front.')->group(function (){
     Route::middleware('auth')->prefix('cart')->name('cart.')->group(function (){
         Route::resource('/cart',CartController::class);
     });
-    Route::middleware(['auth','roles'])->prefix('depot')->name('depot.')->group(function (){
-        Route::resource('/depot',DepotController::class);
-    });
     Route::middleware(['auth','roles'])->prefix('menu')->name('menu.')->group(function (){
         Route::resource('/menu',MenuController::class);
+    });
+    Route::prefix('question')->name('question.')->group(function (){
+        Route::get('/index',[QuestionController::class,'index'])->name('index');
+        Route::get('/show/{id}',[QuestionController::class,'show'])->name('show');
+        Route::post('/store',[QuestionController::class,'store'])->name('store');
+        Route::middleware('role')->post('/store/answer/{id}',[QuestionController::class,'answer'])->name('answer');
+        Route::middleware('role')->delete('/delete/{id}',[QuestionController::class,'destroy'])->name('destroy');
+    });
+    Route::prefix('centralshop')->name('centralshop.')->group(function (){
+        Route::get('/index',[CentralShopController::class,'index'])->name('index');
+        Route::get('/show/{id}',[CentralShopController::class,'show'])->name('show');
     });
 });
 
@@ -103,8 +113,7 @@ Route::name('admin.')->group(function (){
     Route::middleware('auth')->prefix('Discount')->name('Discount.')->group(function (){
         Route::resource('/Discount',DiscountController::class);
     });
-
-    Route::middleware(['store_manager','auth'])->group(function (){
+    Route::middleware('auth')->group(function (){
           Route::prefix('product')->name('product.')->group(function (){
               Route::get('/index',[AdminProductController::class,'index'])->name('index');
               Route::get('/show/{id}',[AdminProductController::class,'show'])->name('show');
@@ -115,6 +124,7 @@ Route::name('admin.')->group(function (){
           });
           Route::prefix('category')->name('category.')->group(function (){
           Route::get('/index',[AdminCategoryController::class,'index'])->name('index');
+          Route::get('/create',[AdminCategoryController::class,'create'])->name('create');
           Route::get('/show/{id}',[AdminCategoryController::class,'show'])->name('show');
           Route::post('/store',[AdminCategoryController::class,'store'])->name('store');
           Route::post('/edit/{id}',[AdminCategoryController::class,'edit'])->name('edit');
@@ -142,8 +152,16 @@ Route::name('admin.')->group(function (){
               Route::middleware('roles')->prefix('status')->get('/status/{id}',[AdminShopController::class,'status']);
 
           });
-          Route::middleware('role')->resource('/influencer',InfluencerController::class);
+          Route::middleware('roles')->resource('/influencer',InfluencerController::class);
 
+    });
+    Route::prefix('stylist')->name('stylist')->group(function (){
+        Route::get('/index/{id}',[StylistController::class,'index'])->name('index');
+        Route::get('/show/{id}',[StylistController::class,'show'])->name('show');
+        Route::post('/store/{id}',[StylistController::class,'store'])->name('store');
+        Route::get('/edit/{id}',[StylistController::class,'edit'])->name('edit');
+        Route::put('/update/{id}',[StylistController::class,'update'])->name('update');
+        Route::delete('/delete/{id}',[StylistController::class,'destroy'])->name('delete');
     });
 });
 

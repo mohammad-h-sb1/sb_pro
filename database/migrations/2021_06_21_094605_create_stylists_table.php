@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepotsTable extends Migration
+class CreateStylistsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateDepotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('depots', function (Blueprint $table) {
+        Schema::create('stylists', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
-            $table->string('number');
+            $table->string('name');
+            $table->text('content');
             $table->timestamps();
         });
     }
-
-    //این مایگریشن برای انبار فقط
 
     /**
      * Reverse the migrations.
@@ -30,6 +30,6 @@ class CreateDepotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('depots');
+        Schema::dropIfExists('stylists');
     }
 }

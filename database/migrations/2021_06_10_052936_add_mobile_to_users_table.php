@@ -15,7 +15,7 @@ class AddMobileToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('mobile')->after('email')->unique()->nullable();
-            $table->string('profile')->after('mobile');
+            $table->string('profile')->after('mobile')->default("0");
         });
     }
 

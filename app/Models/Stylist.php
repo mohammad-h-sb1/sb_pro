@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Stylist extends Model
 {
     use HasFactory;
 
     public function products()
     {
-        return $this->belongsToMany(Product::class,'product_tag');
+        return $this->hasMany(Product::class);
     }
-    public function getJalaly()
+
+    public function user()
     {
-        return verta($this->created_at)->format('Y/m/d');
+        return $this->hasOne(User::class);
     }
 }

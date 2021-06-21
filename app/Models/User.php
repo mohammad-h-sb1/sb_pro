@@ -14,7 +14,10 @@ class User extends Authenticatable
     const TYPE_ADMIN_NORMAL='admin_normal';
     const TYPE_INFLUENCER='influencer';
     const TYPE_USER='user';
-    const TYPES=[self::TYPE_ADMIN,self::TYPE_USER,self::TYPE_ADMIN_NORMAL,self::TYPE_STORE_MANAGER,self::TYPE_INFLUENCER ];
+    const TYPE_ADMIN_CENTRAL_SHOP='admin_central_shop';
+    const TYPE_STYLIST='stylist';
+    const TYPES=[self::TYPE_ADMIN,self::TYPE_USER,self::TYPE_ADMIN_NORMAL,self::TYPE_STORE_MANAGER,self::TYPE_INFLUENCER,self::TYPE_ADMIN_CENTRAL_SHOP,
+        self::TYPE_STYLIST];
 
     use HasFactory, Notifiable;
 
@@ -120,4 +123,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Shop::class);
     }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function stylist()
+    {
+        return $this->hasOne(Stylist::class);
+    }
+
 }

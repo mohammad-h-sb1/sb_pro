@@ -37,13 +37,13 @@ class InfluencerController extends Controller
      */
     public function store(Request $request)
     {
-        $code=auth()->user()->name.'abcdefgijklmnopqrstuyz12345678';
+        $code='abcdefgijklmnopqrstuyz12345678';
         $code_rand=substr(str_shuffle($code),0,8);
         $influencer=[
             'user_id'=>auth()->user()->id,
             'name'=>$request->name,
             'code'=>$code_rand,
-            'discount_rate'=>$request->discount_rate,
+            'discount_rating'=>$request->discount_rating,
         ];
         Influencer::create($influencer);
         return response()->json($influencer);
@@ -89,7 +89,7 @@ class InfluencerController extends Controller
                 'user_id'=>auth()->user()->id,
                 'name'=>$request->name,
                 'code'=>$code_rand,
-                'discount_rate'=>$request->discount_rate,
+                'discount_rating'=>$request->discount_rating,
         ]);
         return response()->json($influencer);
 

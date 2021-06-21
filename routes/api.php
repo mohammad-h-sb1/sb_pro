@@ -15,17 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::get('/user',function (){
-    return \App\Models\User::all();
-});
-Route::prefix('/protect')->group(function (){
-    Route::get('/',[ProductController::class,'index'])->name('index');
-    Route::get('/{id}',[ProductController::class,'show'])->name('show');
-    Route::post('/',[ProductController::class,'store1'])->name('store');
-    Route::put('/{id}',[ProductController::class,'update1'])->name('update');
-    Route::delete('/{id}',[ProductController::class,'destroy'])->name('delete');
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+//
+//Route::get('/user',function (){
+//    return \App\Models\User::all();
+//});
+//Route::prefix('/protect')->group(function (){
+//    Route::get('/',[ProductController::class,'index'])->name('index');
+//    Route::get('/{id}',[ProductController::class,'show'])->name('show');
+//    Route::post('/',[ProductController::class,'store1'])->name('store');
+//    Route::put('/{id}',[ProductController::class,'update1'])->name('update');
+//    Route::delete('/{id}',[ProductController::class,'destroy'])->name('delete');
+//});

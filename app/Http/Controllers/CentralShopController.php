@@ -14,7 +14,8 @@ class CentralShopController extends Controller
      */
     public function index()
     {
-        //
+        $centralshops=CentralShop::all();
+        return response()->json($centralshops);
     }
 
     /**
@@ -35,7 +36,7 @@ class CentralShopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -44,9 +45,17 @@ class CentralShopController extends Controller
      * @param  \App\Models\CentralShop  $centralShop
      * @return \Illuminate\Http\Response
      */
-    public function show(CentralShop $centralShop)
+    public function show($id)
     {
-        //
+        ;
+        $centralshops=CentralShop::query()->findOrFail($id);
+        foreach ($centralshops->shops() as $shop)
+        {
+            $name=$shop->name;
+        }
+
+
+//        return response()->json([$centralshops]);
     }
 
     /**

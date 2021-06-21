@@ -52,13 +52,16 @@ class ProductController extends Controller
 ////        $file->storeAs('imag/protect/',$file_name,'public_img');
 //        $post = [
 //            'user_id' => auth()->user()->id,
-//            'category-id' => $request->category_id,
+//            'category_id' => $request->category_id,
 //            'name' => $request->name,
 //            'content' => $request->content,
 //            'money' => $request->money,
 //            'banner' => $product->protect_imges()->img,
+//            'number'=>$request->number
 //        ];
 //        Product::create($post);
+//        $tag_id=$request->tags;
+//        $post->tags()->attache($tag_id);
 //        return response()->json($post,204);
 //
 //    }
@@ -159,7 +162,7 @@ class ProductController extends Controller
     public function update1(Request $request,$id)
     {
         $product=Product::query()->findOrFail($id);
-        $data=$request->only('category_id','name','content','banner','money');
+        $data=$request->only('category_id','name','content','banner','money','number');
         $product->update($data);
         return response()->json($product,202);
     }

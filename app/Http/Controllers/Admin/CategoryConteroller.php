@@ -15,6 +15,12 @@ class CategoryConteroller extends Controller
         return response()->json($product,200);
     }
 
+    public function create()
+    {
+
+        return view('tmrin.category');
+    }
+
     public function show($id)
     {
         $user_id=auth()->user()->id;
@@ -24,17 +30,18 @@ class CategoryConteroller extends Controller
 
     public function store(Request $request)
     {
-        $file=$request->file('photo');
-        $file_name=$file->getClientOriginalName();
-        $file->storeAs('img/category',$file_name,'public_img');
+
+//        $file=$request->file('photo');
+//        $file_name=$file->getClientOriginalName();
+//        $file->storeAs('img/category',$file_name,'public_img');
         $category=[
             'user_id'=>auth()->user()->id,
             'name'=>$request->name,
-            'img'=>$file,
+            'img'=>$request->photo,
             'content'=>$request->content,
         ];
         Category::create($category);
-        return response()->json();
+        return response()->json($category);
     }
 
     public function edit($id)

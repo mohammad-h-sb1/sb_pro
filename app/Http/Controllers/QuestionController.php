@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Depot;
-use App\Models\Product;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
-class DepotController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class DepotController extends Controller
      */
     public function index()
     {
-        $depot=Depot::all();
-        return response()->json($depot);
+        $questions=Question::all();
+        return response()->json($questions);
     }
 
     /**
@@ -37,65 +36,65 @@ class DepotController extends Controller
      */
     public function store(Request $request)
     {
-        $depot=[
-            'product'=>$request->product,
-            'number'=>$request->number
+        $question=[
+            'user_id'=>auth()->user()->id,
+            'content'=>$request->content,
         ];
-        return response()->json($depot);
+        Question::created($question);
+        return response()->json($question);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Depot  $depot
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Depot $depot,$id)
+    public function show(Question $question)
     {
-        $protect=Product::query()->findOrFail($id);
-        return response()->json($protect);
+        return response()->json($question);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Depot  $depot
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Depot $depot,$id)
+    public function edit(Question $question)
     {
-        $protect=Product::query()->findOrFail($id);
-        return response()->json($protect);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Depot  $depot
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, Question $question)
     {
-        $depot=Depot::query()->where('product_id',$id)
-            ->update(
-                [
-                    'number'=>$request->number
-                ]
-            );
-        return response()->json($depot);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Depot  $depot
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $depot=Depot::query()->where('product_id',$id)
-            ->delete();
-        return response()->json($depot);
+        Question::query()->findOrFail($id)->delete();
+    }
+
+    public function answer(Request $request,$id)
+    {
+        $answer=[
+            'answer'=>$request->answer
+        ];
+        Question::query()->findOrFail($id)->create($answer);
+        return response()->json($answer);
     }
 }

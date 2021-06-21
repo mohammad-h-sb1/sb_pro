@@ -18,7 +18,8 @@ class CreateInfluencersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('code');
-            $table->string('discount_rate');
+            $table->text('content');
+            $table->string('discount_rating');
             $table->timestamps();
         });
     }

@@ -54,7 +54,7 @@ class ProductController extends Controller
 
     public function update(Request $request,$id)
     {
-        $protect=Product::query()->where()
+        $protect=Product::query()->where('id',$id)
             ->update([
                 'name' => $request->name,
                 'category_id' => $request->input('category_id'),

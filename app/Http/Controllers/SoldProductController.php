@@ -64,8 +64,8 @@ class SoldProductController extends Controller
      */
     public function edit(SoldProduct $soldProduct,$id)
     {
-        $SoldProduct=SoldProduct::query()->findOrFail($id);
-        return response()->json($SoldProduct);
+//        $SoldProduct=SoldProduct::query()->findOrFail($id);
+        return response()->json($soldProduct);
     }
 
     /**

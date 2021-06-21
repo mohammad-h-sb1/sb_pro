@@ -52,7 +52,7 @@ class Product extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'product_tag');
     }
     public function getJalaly()
     {
@@ -82,5 +82,10 @@ class Product extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function Stylist()
+    {
+        return $this->belongsTo(Stylist::class);
     }
 }
